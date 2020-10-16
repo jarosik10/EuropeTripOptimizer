@@ -1,10 +1,13 @@
-import React, { useRef, useEffect} from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ReactComponent as MapSVG } from './../../assets/images/map.svg';
-import styled from 'styled-components';
+import styled, {withTheme} from 'styled-components';
+import { connect } from 'react-redux';
+import * as actions from '../../store/index';
 
 const StyledMapWrapper = styled.div`
     width: 100%;
-    height: calc(100vh - 60px);
+    height: 100vh;
+    padding-top: 60px;
     position: relative;
     overflow: hidden;
 `;
@@ -18,11 +21,10 @@ const StyledMapSVG = styled(MapSVG)`
     left: -50%;
 `;
 
-
-
-const Map = props => {
+const Map = ({selectedCapitals, theme, ...props}) => {
     const mapContainerRef = useRef();
     const mapRef = useRef(null);
+    const selectedCapitalsRef = useRef(selectedCapitals);
     let isDraggingStarted = false;
     let isPointerMoved = false;
     let initialPosition;
@@ -32,13 +34,12 @@ const Map = props => {
         firstFinger: { x: -1, y: -1 },
         secondFinger: { x: -1, y: -1 }
     }
-    const touchTolerance = 1.5;
-    // const [text, setText] = useState('nothing');
+    const touchTolerance = 4;
+
     useEffect(() => {
         const mapContainer = mapContainerRef.current;
         const map = mapRef.current;
         initMapParams(map);
-
         mapContainer.addEventListener('mousedown', (event) => handleDragStart(event));
         mapContainer.addEventListener('mousemove', (event) => handleDragging(event));
         mapContainer.addEventListener('mouseup', handleDragEnd);
@@ -56,6 +57,23 @@ const Map = props => {
             country.addEventListener('mouseup', () => handleClick(country));
             country.addEventListener('touchend', () => handleClick(country));
         });
+        return () => {
+            mapContainer.removeEventListener('mousedown', handleDragStart);
+            mapContainer.removeEventListener('mousemove', handleDragging);
+            mapContainer.removeEventListener('mouseup', handleDragEnd);
+            mapContainer.removeEventListener('wheel', handleMouseZooming)
+
+            mapContainer.removeEventListener('touchstart', handleDragStart);
+            mapContainer.removeEventListener('touchstart', handleRegisterTouch);
+            mapContainer.removeEventListener('touchmove', handleTouchDragging);
+            mapContainer.removeEventListener('touchend', handleDragEnd);
+            mapContainer.removeEventListener('touchend', handleUnregisterTouch);
+
+            [...countires].forEach(country => {
+                country.removeEventListener('touchend', handleClick);
+                country.removeEventListener('mouseup', handleClick);
+            });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -165,17 +183,57 @@ const Map = props => {
     const handleClick = country => {
         if (isPointerMoved) return;
         const [...elements] = country.children;
-        const [capitol] = elements.filter(({ attributes: { class: { value } } }) => value === 'capitol');
-        console.log(capitol.attributes.name.value);
-        // setText(capitol.attributes.name.value);
+        const [capital] = elements.filter(({ attributes: { class: { value } } }) => value === 'capital');
+        const capitalName = capital.attributes.name.value;
+        const countryId = country.id;
+
+        if (selectedCapitalsRef.current.filter(({ countryId: id }) => id === countryId).length === 0) {
+            props.addCapital(capitalName, countryId);
+        } else {
+            props.removeCapital(countryId);
+        }
     }
+
+    useEffect(() => {
+        const [elements] = mapRef.current.children;
+        const countires = elements.querySelectorAll('.country');
+        [...countires].forEach((country) => {
+            const [land] = [...country.children].filter(({ attributes: { class: { value } } }) => value === 'land');
+            const [capitalPoint] = [...country.children].filter(({ attributes: { class: { value } } }) => value === 'capital');
+            land.style.fill = null;
+            capitalPoint.style.fill = null;
+            capitalPoint.style.r = null;
+
+        });
+        selectedCapitals.forEach(capital => {
+            const [country] = [...countires].filter(({ id }) => id === capital.countryId);
+            const [land] = [...country.children].filter(({ attributes: { class: { value } } }) => value === 'land');
+            const [capitalPoint] = [...country.children].filter(({ attributes: { class: { value } } }) => value === 'capital');
+            land.style.fill = capital.isStartingPoint ? theme.colors.startingLand : theme.colors.destinationLand;
+            capitalPoint.style.fill = capital.isStartingPoint ? theme.colors.startingCapital : theme.colors.destinationCapital;
+            capitalPoint.style.r = 2;
+            
+        });
+        selectedCapitalsRef.current = selectedCapitals;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedCapitals]);
 
     return (
         <StyledMapWrapper ref={mapContainerRef}>
             <StyledMapSVG ref={mapRef} />
-            {/* <p>{text}</p> */}
         </StyledMapWrapper>
     );
 }
 
-export default Map;
+const mapStateToProps = state => {
+    return { selectedCapitals: state.selectedCapitals }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addCapital: (capitalName, countryId) => dispatch(actions.addCapital(capitalName, countryId)),
+        removeCapital: countryId => dispatch(actions.removeCapital(countryId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withTheme(Map));

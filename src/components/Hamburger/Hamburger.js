@@ -11,7 +11,7 @@ const InnerHamburger = styled.div`
     position: relative;
     width: 28px;
     height: 3px;
-    background-color: white;
+    background-color: ${({ theme }) => theme.colors.white};
 
     ::after, ::before {
         content: '';
@@ -19,7 +19,7 @@ const InnerHamburger = styled.div`
         left: 0;
         width: 28px;
         height: 3px;
-        background-color: white;
+        background-color: ${({ theme }) => theme.colors.white};
     }
 
     ::before {

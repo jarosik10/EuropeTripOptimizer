@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const StyledTitle = styled.h1`
     margin: 0;
     font-size: 24px;
-    color: white;
+    color: ${({ theme }) => theme.colors.white};
     text-align: center;
 
     .title__start {
@@ -17,7 +17,6 @@ const StyledTitle = styled.h1`
     .title__end {
         display: block;
         font-size: 0.75em;
-        /* letter-spacing: 0.1em; */
         line-height: 0.6em;
         margin-bottom: 0.4em;
         font-weight: normal;
