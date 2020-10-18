@@ -1,4 +1,5 @@
 {
+  "homepage": "https://jarosik10.github.io/EuropeTripOptimizer",
   "name": "europe-trip-optimizer",
   "version": "0.1.0",
   "private": true,
@@ -15,6 +16,8 @@
     "redux": "^4.0.5"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -36,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^3.1.0",
     "styled-components": "^5.2.0"
   }
 }
