@@ -19,9 +19,7 @@ body {
 const Layout = ({ children }) => (
     <ThemeProvider theme={theme}>
         <GlobalStyles />
-        <div>
             {children}
-        </div>
     </ThemeProvider>
 );
 

@@ -5,6 +5,10 @@ const StyledHamburger = styled.button`
     padding: 15px 5px;
     border: none;
     background: none;
+
+    ${({theme}) => theme.media.smallDesktop} {
+        display: none;
+    }
 `;
 
 const InnerHamburger = styled.div`

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { ReactComponent as MapSVG } from './../../assets/images/map.svg';
-import styled, {withTheme} from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import { connect } from 'react-redux';
 import * as actions from '../../store/index';
 
@@ -10,6 +10,10 @@ const StyledMapWrapper = styled.div`
     padding-top: 60px;
     position: relative;
     overflow: hidden;
+
+    ${({ theme }) => theme.media.smallDesktop} {
+        padding-top: 0;
+    } 
 `;
 
 const StyledMapSVG = styled(MapSVG)`
@@ -19,9 +23,36 @@ const StyledMapSVG = styled(MapSVG)`
     height: 100%;
     width: auto;
     left: -50%;
+
+    ${({ theme }) => theme.media.smallTablet} {
+        left: -15%;
+    }
+
+    ${({ theme }) => theme.media.mobileLandscape} {
+        left: 0;
+        width: 100%;
+        height: auto;
+    }
+        
+    ${({ theme }) => theme.media.tablet} {
+        left: 0;
+        width: 100%;
+       height: auto;
+    }
+
+    ${({ theme }) => theme.media.smallDesktop} {
+        height: 100%;
+        width: auto;
+    } 
+    
+    ${({ theme }) => theme.media.desktop} {
+       bottom: -15%;
+       width: 100%;
+       height: auto;
+    } 
 `;
 
-const Map = ({selectedCapitals, theme, ...props}) => {
+const Map = ({ selectedCapitals, theme, ...props }) => {
     const mapContainerRef = useRef();
     const mapRef = useRef(null);
     const selectedCapitalsRef = useRef(selectedCapitals);
@@ -212,10 +243,10 @@ const Map = ({selectedCapitals, theme, ...props}) => {
             land.style.fill = capital.isStartingPoint ? theme.colors.startingLand : theme.colors.destinationLand;
             capitalPoint.style.fill = capital.isStartingPoint ? theme.colors.startingCapital : theme.colors.destinationCapital;
             capitalPoint.style.r = 2;
-            
+
         });
         selectedCapitalsRef.current = selectedCapitals;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedCapitals]);
 
     return (

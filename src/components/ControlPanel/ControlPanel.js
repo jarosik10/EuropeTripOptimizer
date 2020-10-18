@@ -8,18 +8,48 @@ import Button from '../Button/Button';
 
 const StyledControlPanel = styled.div`
     position: fixed;
-    background-color: white;
+    background-color: ${({ theme }) => theme.colors.white};
     top: 0;
     right: 0;
     bottom: 0;
     padding-top: 60px;
     width: 80%;
     transform: translateX(${({ isOpen }) => isOpen ? '0' : '100%'});
-    transition: transform .3s ease-in-out;
+    visibility: ${({ isOpen }) => isOpen ? 'visible' : 'hidden'};
+    transition: transform .3s ease-in-out, visibility .3s ease-in-out;
     z-index: 9998;
     display: grid;
     grid-template-rows: auto 1fr auto;
-    box-shadow: -1px 0px 4px 1px rgba(0, 0, 0, 0.25);
+    border-left: 1px solid ${({ theme }) => theme.colors.darkBlue};
+    box-shadow: -1px 0px 4px 1px rgba(0, 0, 0, 0.25);    
+
+    ${({ theme }) => theme.media.smallTablet} {
+        width: 50%;
+    }
+
+    ${({ theme }) => theme.media.mobileLandscape} {
+        width: 100%;
+        padding-top: 65px;
+        grid-template-columns: 1fr 1fr auto;
+        grid-template-rows: auto;
+    }
+
+    ${({ theme }) => theme.media.tablet} {
+        width: 40%;
+        max-width: 350px;
+    }
+
+    ${({ theme }) => theme.media.smallDesktop} {
+        position: static;
+        width: 30%;
+        max-width: 380px;
+        height: 100vh;
+        transform: translateX(0);
+        visibility: visible;
+        flex-shrink: 0;
+        border-right: 1.5px solid ${({ theme }) => theme.colors.darkBlue};
+        box-shadow: 1px 0px 8px 0px rgba(0, 0, 0, 0.25);    
+    }
 `;
 
 const StyledButtonWrapper = styled.div`
@@ -28,7 +58,7 @@ const StyledButtonWrapper = styled.div`
     bottom: 0;
     margin-top: auto;
     background-color: ${({ theme }) => theme.colors.white};
-
+    
     ::before {
         content: '';
         display: block;
@@ -42,11 +72,19 @@ const StyledButtonWrapper = styled.div`
         transform: translateX(-50%);
     }
 
+    ${({ theme }) => theme.media.mobileLandscape} {
+        margin-bottom: auto;
+        padding: 0 5px;
+
+        ::before {
+            content: unset;
+        }
+    }
 `;
 
 const ControlPanel = ({ isOpen, ...props }) => {
     const handleClick = () => {
-        console.log('clicked!')
+        alert('In development!');
     }
 
     const [startingPointCapital] = props.selectedCapitals.filter(({ isStartingPoint }) => isStartingPoint);
@@ -54,8 +92,8 @@ const ControlPanel = ({ isOpen, ...props }) => {
     const isEnoughCapitals = startingPointCapital && destinationPointsCapitals.length > 0;
     return (
         <StyledControlPanel isOpen={isOpen} >
-            <StartingPoint capital={startingPointCapital} handleCancel={props.removeCapital}/>
-            <DestinationPoints capitals={destinationPointsCapitals} handleCancel={props.removeCapital}/>
+            <StartingPoint capital={startingPointCapital} handleCancel={props.removeCapital} />
+            <DestinationPoints capitals={destinationPointsCapitals} handleCancel={props.removeCapital} />
             <StyledButtonWrapper>
                 <Button isEnabled={isEnoughCapitals} handleClick={handleClick}>Calculate route</Button>
             </StyledButtonWrapper>

@@ -15,14 +15,20 @@ const StyledHeader = styled.header`
     width: 100%;
     top: 0;
 
+    ${({ theme }) => theme.media.smallDesktop} {
+        left: 0;
+        width: 30%;
+        max-width: 380px;
+        justify-content: center;
+    }
+
 `;
 
-
-const Header = ({onControlPanelToggle, ...props}) => {
+const Header = ({ onControlPanelToggle, ...props }) => {
     return (
         <StyledHeader>
             <SiteTitle />
-            <Hamburger onClick={onControlPanelToggle}/>
+            <Hamburger onClick={onControlPanelToggle} />
         </StyledHeader>
     );
 }
