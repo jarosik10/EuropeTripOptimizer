@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.js": "/europe-trip-optimizer/static/js/main.ba3da1cf.chunk.js",
+    "main.js.map": "/europe-trip-optimizer/static/js/main.ba3da1cf.chunk.js.map",
+    "runtime-main.js": "/europe-trip-optimizer/static/js/runtime-main.b1e2308d.js",
+    "runtime-main.js.map": "/europe-trip-optimizer/static/js/runtime-main.b1e2308d.js.map",
+    "static/js/2.1945200f.chunk.js": "/europe-trip-optimizer/static/js/2.1945200f.chunk.js",
+    "static/js/2.1945200f.chunk.js.map": "/europe-trip-optimizer/static/js/2.1945200f.chunk.js.map",
+    "index.html": "/europe-trip-optimizer/index.html",
+    "precache-manifest.7e28085c2054b205cd18fb61a4dccac6.js": "/europe-trip-optimizer/precache-manifest.7e28085c2054b205cd18fb61a4dccac6.js",
+    "service-worker.js": "/europe-trip-optimizer/service-worker.js",
+    "static/js/2.1945200f.chunk.js.LICENSE.txt": "/europe-trip-optimizer/static/js/2.1945200f.chunk.js.LICENSE.txt",
+    "static/media/map.543c93ab.svg": "/europe-trip-optimizer/static/media/map.543c93ab.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b1e2308d.js",
+    "static/js/2.1945200f.chunk.js",
+    "static/js/main.ba3da1cf.chunk.js"
+  ]
+}
