@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 import H2 from '../H2/H2';
 import Capital from '../Capital/Capital';
 
@@ -20,7 +20,7 @@ const StyledUL = styled.ul`
 
 `;
 
-const StartingPoint = ({ capitals, handleCancel }) => {
+const DestinationPoints = ({ capitals, handleCancel }) => {
     return (
         <StyledDestinatinoPointsWrapper>
             <H2 isDark>Destination points</H2>
@@ -35,4 +35,13 @@ const StartingPoint = ({ capitals, handleCancel }) => {
     );
 }
 
-export default StartingPoint;
+DestinationPoints.propTypes = {
+    capitals: PropTypes.arrayOf(PropTypes.shape({
+        capitalName: PropTypes.string.isRequired,
+        countryId: PropTypes.string.isRequired,
+        isStartingPoint: PropTypes.bool,
+    })),
+    handleCancel: PropTypes.func.isRequired,
+}
+
+export default DestinationPoints;

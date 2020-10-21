@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledCapitalWrapper = styled.div`
@@ -10,7 +11,7 @@ const StyledCapitalWrapper = styled.div`
 `;
 
 const StyledCapital = styled.div`
-    background-color: ${({ isDark, theme }) => isDark ? theme.colors.lightBlue : theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.white};
     border: 1px solid #1f1f1f;
     display: flex;
     border-radius: 10px;
@@ -63,19 +64,23 @@ const CancelButton = styled.button`
     }
 `;
 
-
-
-const Capital = ({ name, countryShortcut, isDark, handleCancel }) => {
+const Capital = ({ name, countryShortcut, handleCancel }) => {
     const capitalName = `${name} (${countryShortcut.toUpperCase()})`
     return (
         <StyledCapitalWrapper>
-            <StyledCapital isDark={isDark}>
+            <StyledCapital>
                 <H3>{capitalName}</H3>
                 <FlagImage><img src={`https://www.countryflags.io/${countryShortcut}/shiny/64.png`} alt={`${countryShortcut.toUpperCase()} flag`} /></FlagImage>
             </StyledCapital>
-            <CancelButton onClick={() => handleCancel(countryShortcut)}/>
+            <CancelButton onClick={() => handleCancel(countryShortcut)} />
         </StyledCapitalWrapper>
     );
+}
+
+Capital.propTypes = {
+    name: PropTypes.string.isRequired,
+    countryShortcut: PropTypes.string.isRequired,
+    handleCancel: PropTypes.func.isRequired,
 }
 
 export default Capital;

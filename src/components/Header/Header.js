@@ -1,4 +1,5 @@
 import React from 'react';
+import PropsTypes from 'prop-types';
 import styled from 'styled-components';
 import SiteTitle from '../SiteTitle/SiteTitle';
 import Hamburger from '../Hamburger/Hamburger';
@@ -24,13 +25,17 @@ const StyledHeader = styled.header`
 
 `;
 
-const Header = ({ onControlPanelToggle, ...props }) => {
+const Header = ({ onControlPanelToggle }) => {
     return (
         <StyledHeader>
             <SiteTitle />
             <Hamburger onClick={onControlPanelToggle} />
         </StyledHeader>
     );
+}
+
+Header.propTypes = {
+    onControlPanelToggle: PropsTypes.func.isRequired,
 }
 
 export default Header;

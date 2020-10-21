@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { ReactComponent as MapSVG } from './../../assets/images/map.svg';
 import styled, { withTheme } from 'styled-components';
 import { connect } from 'react-redux';
@@ -52,7 +53,7 @@ const StyledMapSVG = styled(MapSVG)`
     } 
 `;
 
-const Map = ({ selectedCapitals, theme, ...props }) => {
+const Map = ({ selectedCapitals, theme, addCapital, removeCapital }) => {
     const mapContainerRef = useRef();
     const mapRef = useRef(null);
     const selectedCapitalsRef = useRef(selectedCapitals);
@@ -219,9 +220,9 @@ const Map = ({ selectedCapitals, theme, ...props }) => {
         const countryId = country.id;
 
         if (selectedCapitalsRef.current.filter(({ countryId: id }) => id === countryId).length === 0) {
-            props.addCapital(capitalName, countryId);
+            addCapital(capitalName, countryId);
         } else {
-            props.removeCapital(countryId);
+            removeCapital(countryId);
         }
     }
 
@@ -265,6 +266,16 @@ const mapDispatchToProps = dispatch => {
         addCapital: (capitalName, countryId) => dispatch(actions.addCapital(capitalName, countryId)),
         removeCapital: countryId => dispatch(actions.removeCapital(countryId))
     }
+}
+
+Map.propTypes = {
+    selectedCapitals: PropTypes.arrayOf(PropTypes.shape({
+        capitalName: PropTypes.string.isRequired,
+        countryId: PropTypes.string.isRequired,
+        isStartingPoint: PropTypes.bool.isRequired,
+    })),
+    addCapital: PropTypes.func.isRequired,
+    removeCapital: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTheme(Map));

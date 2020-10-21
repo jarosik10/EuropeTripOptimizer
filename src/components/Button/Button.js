@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
@@ -18,10 +19,19 @@ const StyledButton = styled.button`
     }
 `;
 
-const Button = ({ isEnabled, handleClick, ...props }) => {
+const Button = ({ isEnabled, handleClick, children }) => {
     return (
-        <StyledButton disabled={!isEnabled} onClick={handleClick}>{props.children}</StyledButton>
+        <StyledButton disabled={!isEnabled} onClick={handleClick}>{children}</StyledButton>
     );
+}
+
+Button.propTypes = {
+    isEnabled: PropTypes.bool.isRequired,
+    handleClick: PropTypes.func.isRequired,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+    ]).isRequired,
 }
 
 export default Button;

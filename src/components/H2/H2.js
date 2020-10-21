@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const H2 = styled.h2`
@@ -22,5 +23,9 @@ const H2 = styled.h2`
         transform: translateX(-50%);
     }
 `;
+
+H2.propTypes = {
+    isDark: PropTypes.bool
+}
 
 export default H2;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import * as actions from '../../store/index';
@@ -82,18 +83,18 @@ const StyledButtonWrapper = styled.div`
     }
 `;
 
-const ControlPanel = ({ isOpen, ...props }) => {
+const ControlPanel = ({ isOpen, selectedCapitals, removeCapital }) => {
     const handleClick = () => {
         alert('In development!');
     }
 
-    const [startingPointCapital] = props.selectedCapitals.filter(({ isStartingPoint }) => isStartingPoint);
-    const destinationPointsCapitals = props.selectedCapitals.filter(({ isStartingPoint }) => !isStartingPoint);
-    const isEnoughCapitals = startingPointCapital && destinationPointsCapitals.length > 0;
+    const [startingPointCapital] = selectedCapitals.filter(({ isStartingPoint }) => isStartingPoint);
+    const destinationPointsCapitals = selectedCapitals.filter(({ isStartingPoint }) => !isStartingPoint);
+    const isEnoughCapitals = startingPointCapital !== undefined && destinationPointsCapitals.length > 0;
     return (
         <StyledControlPanel isOpen={isOpen} >
-            <StartingPoint capital={startingPointCapital} handleCancel={props.removeCapital} />
-            <DestinationPoints capitals={destinationPointsCapitals} handleCancel={props.removeCapital} />
+            <StartingPoint capital={startingPointCapital} handleCancel={removeCapital} />
+            <DestinationPoints capitals={destinationPointsCapitals} handleCancel={removeCapital} />
             <StyledButtonWrapper>
                 <Button isEnabled={isEnoughCapitals} handleClick={handleClick}>Calculate route</Button>
             </StyledButtonWrapper>
@@ -109,6 +110,16 @@ const mapDispatchToProps = dispatch => {
     return {
         removeCapital: countryId => dispatch(actions.removeCapital(countryId))
     }
+}
+
+ControlPanel.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    selectedCapitals: PropTypes.arrayOf(PropTypes.shape({
+        capitalName: PropTypes.string.isRequired,
+        countryId: PropTypes.string.isRequired,
+        isStartingPoint: PropTypes.bool.isRequired,
+    })),
+    removeCapital: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ControlPanel);

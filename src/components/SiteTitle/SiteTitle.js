@@ -23,7 +23,7 @@ const StyledTitle = styled.h1`
     }
 `;
 
-const Title = props => {
+const SiteTitle = () => {
     return (
         <StyledTitle>
             <span className="title__start">Europe</span>
@@ -32,4 +32,4 @@ const Title = props => {
     )
 }
 
-export default Title;
+export default SiteTitle;

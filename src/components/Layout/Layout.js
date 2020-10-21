@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { theme } from '../../utils/theme';
 
@@ -22,5 +23,12 @@ const Layout = ({ children }) => (
             {children}
     </ThemeProvider>
 );
+
+Layout.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+}
 
 export default Layout;
