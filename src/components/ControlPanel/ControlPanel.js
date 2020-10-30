@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import * as actions from '../../store/index';
+import * as actions from '../../store/actions/index';
 import StartingPoint from '../StartingPoint/StartingPoint';
 import DestinationPoints from '../DestinationPoints/DestinationPoints';
 import Button from '../Button/Button';
+import CAPITAL_COORDINATES from './../../assets/data/capitals-coordinates.json';
 
 const StyledControlPanel = styled.div`
     position: fixed;
@@ -83,9 +84,24 @@ const StyledButtonWrapper = styled.div`
     }
 `;
 
-const ControlPanel = ({ isOpen, selectedCapitals, removeCapital }) => {
+const ControlPanel = ({ isOpen, selectedCapitals, removeCapital, submitSelection, fetchDistanceMatrix }) => {
+    const getCapitalsLocations = (capitals) => {
+        const [startingPoint] = capitals.filter(({ isStartingPoint }) => isStartingPoint);
+        if (startingPoint) {
+            const countriesID = capitals.map(({countryId}) => countryId.toUpperCase());
+            const chosenCapitalsCoordinates = CAPITAL_COORDINATES.filter(({CountryCode}) => countriesID.includes(CountryCode));
+            // Put the starting point at the begginging of the chosen capitals coordinates array
+            chosenCapitalsCoordinates.unshift(chosenCapitalsCoordinates.splice(chosenCapitalsCoordinates.findIndex(({ CountryCode }) => CountryCode === startingPoint.countryId.toUpperCase()), 1)[0]);
+            const locations = chosenCapitalsCoordinates.map(({ CapitalLatitude, CapitalLongitude }) => [CapitalLongitude, CapitalLatitude]);
+            const orderedCountresID = chosenCapitalsCoordinates.map(({ CountryCode }) => CountryCode);
+            return [locations, orderedCountresID];
+        }
+    }
+
     const handleClick = () => {
-        alert('In development!');
+        submitSelection();
+        const [locations, orderedCountresID] = getCapitalsLocations(selectedCapitals);
+        fetchDistanceMatrix(locations, orderedCountresID);
     }
 
     const [startingPointCapital] = selectedCapitals.filter(({ isStartingPoint }) => isStartingPoint);
@@ -103,12 +119,13 @@ const ControlPanel = ({ isOpen, selectedCapitals, removeCapital }) => {
 }
 
 const mapStateToProps = state => {
-    return { selectedCapitals: state.selectedCapitals }
+    return { selectedCapitals: state.capitals.selectedCapitals }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        removeCapital: countryId => dispatch(actions.removeCapital(countryId))
+        removeCapital: countryId => dispatch(actions.removeCapital(countryId)),
+        fetchDistanceMatrix: (locations, capitalsOrder) => dispatch(actions.fetchDistanceMatrix(locations, capitalsOrder)),
     }
 }
 

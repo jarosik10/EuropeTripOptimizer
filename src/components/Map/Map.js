@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ReactComponent as MapSVG } from './../../assets/images/map.svg';
 import styled, { withTheme } from 'styled-components';
 import { connect } from 'react-redux';
-import * as actions from '../../store/index';
+import * as actions from '../../store/actions/index';
 
 const StyledMapWrapper = styled.div`
     width: 100%;
@@ -247,7 +247,7 @@ const Map = ({ selectedCapitals, theme, addCapital, removeCapital }) => {
 
         });
         selectedCapitalsRef.current = selectedCapitals;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps        
     }, [selectedCapitals]);
 
     return (
@@ -258,7 +258,7 @@ const Map = ({ selectedCapitals, theme, addCapital, removeCapital }) => {
 }
 
 const mapStateToProps = state => {
-    return { selectedCapitals: state.selectedCapitals }
+    return { selectedCapitals: state.capitals.selectedCapitals }
 }
 
 const mapDispatchToProps = dispatch => {

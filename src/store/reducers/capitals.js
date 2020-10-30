@@ -1,7 +1,7 @@
-import * as actionTypes from './actionTypes';
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    selectedCapitals: []
+    selectedCapitals: [],
 };
 
 const addCapital = (state, { capitalName, countryId }) => {

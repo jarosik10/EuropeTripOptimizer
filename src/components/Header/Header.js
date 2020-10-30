@@ -25,11 +25,11 @@ const StyledHeader = styled.header`
 
 `;
 
-const Header = ({ onControlPanelToggle }) => {
+const Header = ({ showHamburger, isControlPanelOpen, onControlPanelToggle }) => {
     return (
         <StyledHeader>
             <SiteTitle />
-            <Hamburger onClick={onControlPanelToggle} />
+            <Hamburger showHamburger={showHamburger} isActivated={isControlPanelOpen} onClick={onControlPanelToggle} />
         </StyledHeader>
     );
 }
