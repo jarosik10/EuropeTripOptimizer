@@ -1,6 +1,6 @@
 import { matrix, dotDivide, dotMultiply, ones, subset, range, index, pow, min, zeros, clone, sum } from 'mathjs';
 
-const antColonyOptimizer = async (distances) => {
+export const antColonyOptimizer = (distances) => {
     let optimalRoute = [];
     let optimalDistance = -1;
     let distanceMatrix = matrix(distances);
@@ -72,5 +72,3 @@ const antColonyOptimizer = async (distances) => {
         distance: optimalDistance,
     }
 }
-
-export default antColonyOptimizer;

@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-distanceMatrix';
-import antColonyOptimizer from '../../antColonyOptimizer';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import antColonyOptimizerWorker from 'workerize-loader!../../antColonyOptimizer'
 
 export const fetchDistanceMatrixStart = () => {
     return {
@@ -60,8 +61,9 @@ export const antColonyOptimizationSuccess = (optimalRoute, optimalDistance) => {
 
 export const executeAntColonyOptimization = (distances) => {
     return dispatch => {
+        const worker =  antColonyOptimizerWorker();
         dispatch(antColonyOptimizationStart());
-        antColonyOptimizer(distances)
+        worker.antColonyOptimizer(distances)
             .then(({ route, distance }) => {
                 dispatch(antColonyOptimizationSuccess(route, distance));
             });

@@ -117,7 +117,7 @@ const Results = ({ selectedCapitals, loadingDistanceMatrix, executedACO, distanc
                 newDistanceMatrix = deleteUnreachableRoutes(newDistanceMatrix, unreachableCapitals.current);
             }
             distanceMatrix.current = newDistanceMatrix;
-            executeAntColonyOptimization(newDistanceMatrix);
+            executeAntColonyOptimization(newDistanceMatrix._data);
         }
     }, [loadingDistanceMatrix])
 
