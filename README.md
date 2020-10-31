@@ -1,5 +1,4 @@
 # Europe Trip Optimizer
-Work in progress :heavy_exclamation_mark:  
 Live: https://jarosik10.github.io/EuropeTripOptimizer/  
 ## Description
 A website that allows you to select the capitals of European countries you want to visit, and calculate the optimal route for the planned trip.
@@ -9,4 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Technologies
 - React
 - Redux
+- axios
 - styled-components
+- workerize-loader
+- mathjs
