@@ -1,22 +1,62 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { sum, index, matrix, zeros, subset, range, clone, re } from 'mathjs';
+import { sum, index, matrix, zeros, subset, range, clone } from 'mathjs';
 import * as actions from '../../store/actions/index';
 import Loader from '../Loader/Loader';
+import H2 from '../H2/H2';
+import Button from '../Button/Button';
+import Capital from '../Capital/Capital';
+import DistanceArrow from '../DistanceArrow/DistanceArrow';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const StyledResults = styled.div`
     position: absolute;
     width: 100%;
-    height: calc(100% - 60px);
+    height: calc(100vh - 60px);
     top: 60px;
     z-index: 9999;
     background-color: ${({ theme }) => theme.colors.white};
-    /* display: flex; */
+    display: grid;
+    grid-template-rows: auto 1fr;
 `;
 
-const Results = ({ selectedCapitals, loadingDistanceMatrix, executedACO, distances, capitalsOrder, executeAntColonyOptimization, optimalRoute, optimalDistance }) => {
+const StyledSummaryWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: ${({ theme }) => theme.colors.lightBlue};
+`;
+
+const StyledButtonsWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+`;
+
+const OptimizedRoute = styled.div`
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+`;
+
+const StyledOL = styled.ol`
+    overflow-y: scroll;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+`;
+
+const StyledDistanceWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const Results = ({ selectedCapitals, loadingDistanceMatrix, executedACO, distances, capitalsOrder, executeAntColonyOptimization, optimalRoute, optimalDistance, closeResults, resetCapitalsState, resetResultsState }) => {
     let citiesNumber = distances.length;
+    let distanceMatrix = useRef();
     let unreachableCapitals = useRef([]);
     let results;
 
@@ -62,58 +102,81 @@ const Results = ({ selectedCapitals, loadingDistanceMatrix, executedACO, distanc
         return newDistanceMatrix;
     }
 
+    const planNewTrip = () => {
+        closeResults();
+        resetCapitalsState();
+        resetResultsState();
+    }
+
     useEffect(() => {
         if (!loadingDistanceMatrix) {
-            let distanceMatrix = matrix(distances);
-            distanceMatrix = equalizeDistances(distanceMatrix);
-            unreachableCapitals.current = findUnreachableRoutes(distanceMatrix);
-            console.log('unreachableCapitals', unreachableCapitals);
+            let newDistanceMatrix = matrix(distances);
+            newDistanceMatrix = equalizeDistances(newDistanceMatrix);
+            unreachableCapitals.current = findUnreachableRoutes(newDistanceMatrix);
             if (unreachableCapitals.current.length > 0) {
-                distanceMatrix = deleteUnreachableRoutes(distanceMatrix, unreachableCapitals.current);
+                newDistanceMatrix = deleteUnreachableRoutes(newDistanceMatrix, unreachableCapitals.current);
             }
-            console.log('Final distance matrix', distanceMatrix);
-            executeAntColonyOptimization(distanceMatrix);
+            distanceMatrix.current = newDistanceMatrix;
+            executeAntColonyOptimization(newDistanceMatrix);
         }
     }, [loadingDistanceMatrix])
 
     if (executedACO) {
         let errorMessage;
         let fixedOptimalRoute = [...optimalRoute];
+        let orderedDistances = [];
+
         fixedOptimalRoute = fixedOptimalRoute.map(cityNumber => {
             const indexShift = unreachableCapitals.current.filter(unreachableCapital => cityNumber >= unreachableCapital).length;
             return cityNumber + indexShift;
         });
-        console.log('fixedOptimalRoute', fixedOptimalRoute);
         const orderedCountriesID = fixedOptimalRoute.map((cityNumber) => capitalsOrder[cityNumber]);
-        console.log('orderedCountriesID', orderedCountriesID);
-        const routeCapitalsName = orderedCountriesID.map(orderedCountryId => {
-            const [{ capitalName }] = selectedCapitals.filter(({ countryId }) => countryId.toUpperCase() === orderedCountryId);
-            return capitalName;
+        const routeCapitals = orderedCountriesID.map(orderedCountryId => {
+            const [capital] = selectedCapitals.filter(({ countryId }) => countryId.toUpperCase() === orderedCountryId);
+            return capital;
         })
-        console.log(routeCapitalsName);
+
+        for (let i = 0; i < optimalRoute.length - 1; i++) {
+            orderedDistances.push(subset(distanceMatrix.current, index(optimalRoute[i], optimalRoute[i + 1])));
+        }
 
         if (unreachableCapitals.current.length > 0) {
             const unreachableCountiresID = unreachableCapitals.current.map((cityNumber) => capitalsOrder[cityNumber]);
-            console.log('unreachableCountiresID', unreachableCountiresID);
             const unreachableRouteCapitalsName = unreachableCountiresID.map(unreachableCountryID => {
                 const [{ capitalName }] = selectedCapitals.filter(({ countryId }) => countryId.toUpperCase() === unreachableCountryID);
                 return capitalName.charAt(0).toUpperCase() + capitalName.slice(1);
             })
-            console.log('unreachableRouteCapitalsName', unreachableRouteCapitalsName);
             errorMessage = `Couldn't find route to ${unreachableRouteCapitalsName.join(', ')}.`;
         }
 
         results = (
             <>
-                <div>
-                    {errorMessage ? <p>{errorMessage}</p> : null}
-                    <p>Total distance: {optimalDistance}</p>
-                    <button>Plan new trip</button>
-                    <button>Return</button>
-                </div>
-                <div>
-                    <p>Route component</p>
-                </div>
+                <StyledSummaryWrapper>
+                    {errorMessage ? <ErrorMessage text={errorMessage} /> : null}
+                    <H2>Total distance: {Math.round(optimalDistance)} km</H2>
+                    <StyledButtonsWrapper>
+                        <Button handleClick={planNewTrip} isEnabled isSmall>Plan new trip</Button>
+                        <Button handleClick={closeResults} isEnabled isSmall>Return</Button>
+                    </StyledButtonsWrapper>
+                </StyledSummaryWrapper>
+                <OptimizedRoute>
+                    <H2 isDark>Optimal route</H2>
+                    <StyledOL>
+                        {routeCapitals.map((capital, index, array) => (
+                            <li key={index + capital.countryId}>
+                                <Capital
+                                    name={capital.capitalName}
+                                    countryShortcut={capital.countryId}
+                                />
+                                {index !== array.length - 1 ?
+                                    <StyledDistanceWrapper>
+                                        <DistanceArrow distance={Math.round(orderedDistances[index])} />
+                                    </StyledDistanceWrapper>
+                                    : null}
+                            </li>
+                        ))}
+                    </StyledOL>
+                </OptimizedRoute>
             </>
         )
     }
@@ -140,8 +203,32 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        executeAntColonyOptimization: (distances) => dispatch(actions.executeAntColonyOptimization(distances))
+        executeAntColonyOptimization: (distances) => dispatch(actions.executeAntColonyOptimization(distances)),
+        resetCapitalsState: () => dispatch(actions.resetCapitalsState()),
+        resetResultsState: () => dispatch(actions.resetResultsState()),
     }
+}
+
+Results.propTypes = {
+    selectedCapitals: PropTypes.arrayOf(PropTypes.shape({
+        capitalName: PropTypes.string.isRequired,
+        countryId: PropTypes.string.isRequired,
+        isStartingPoint: PropTypes.bool.isRequired,
+    })),
+    loadingDistanceMatrix: PropTypes.bool.isRequired,
+    executedACO: PropTypes.bool.isRequired,
+    distances: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
+    capitalsOrder: PropTypes.arrayOf(PropTypes.string),
+    executeAntColonyOptimization: PropTypes.func.isRequired,
+    optimalRoute: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.number),
+    ]),
+    optimalDistance: PropTypes.oneOfType([
+        PropTypes.number,
+    ]),
+    closeResults: PropTypes.func.isRequired,
+    resetCapitalsState: PropTypes.func.isRequired,
+    resetResultsState: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Results);

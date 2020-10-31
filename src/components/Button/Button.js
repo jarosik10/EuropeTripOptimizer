@@ -6,12 +6,12 @@ const StyledButton = styled.button`
     border: none;
     background-color: ${({ theme }) => theme.colors.darkBlue};
     color: white;
-    font-size: 16px;
-    padding: 10px 16px;
+    font-size: ${({ isSmall }) => isSmall ? '14px' : '16px'};
+    padding: ${({ isSmall }) => isSmall ? '8px 14px' : '10px 16px'};
     border-radius: 12px;
     box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
     display: block;
-    margin: 16px auto;
+    margin: ${({ isCentered }) => isCentered ? '16px auto' : '16px 0'};
 
     :disabled {
         background-color: #C0C0C0;
@@ -19,9 +19,9 @@ const StyledButton = styled.button`
     }
 `;
 
-const Button = ({ isEnabled, handleClick, children }) => {
+const Button = ({ isEnabled, handleClick, children, isSmall, isCentered }) => {
     return (
-        <StyledButton disabled={!isEnabled} onClick={handleClick}>{children}</StyledButton>
+        <StyledButton disabled={!isEnabled} onClick={handleClick} isSmall={isSmall} isCentered={isCentered}>{children}</StyledButton>
     );
 }
 

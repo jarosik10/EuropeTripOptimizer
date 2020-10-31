@@ -18,11 +18,11 @@ const fetchDistanceMatrixStart = (state, action) => {
     return {
         ...state,
         loadingDistanceMatrix: true,
+        executedACO: false,
     }
 }
 
 const fetchDistanceMatrixSuccess = (state, { distances, capitalsOrder }) => {
-    console.log(capitalsOrder);
     return {
         ...state,
         loadingDistanceMatrix: false,
@@ -37,12 +37,14 @@ const fetchDistanceMatrixFail = (state, action) => {
     return {
         ...state,
         loadingDistanceMatrix: false,
+        executedACO: true,
     }
 }
 
 const antColonyOptimizationStart = (state, action) => {
     return {
         ...state,
+        executedACO: false,
     }
 }
 
@@ -57,6 +59,10 @@ const antColonyOptimizationSuccess = (state, { optimalRoute, optimalDistance }) 
     }
 }
 
+const resetResultsState = () => {
+    return initialState;
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_DISTANCE_MATRIX_START:
@@ -69,6 +75,8 @@ const reducer = (state = initialState, action) => {
             return antColonyOptimizationStart(state, action);
         case actionTypes.ANT_COLONY_OPTIMIZATION_SUCCESS:
             return antColonyOptimizationSuccess(state, action);
+        case actionTypes.RESET_RESULTS_STATE:
+            return resetResultsState();
         default:
             return state;
     }

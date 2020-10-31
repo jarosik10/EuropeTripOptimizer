@@ -19,9 +19,6 @@ function App() {
     setIsControlPanelOpen(prevState => !prevState);
   }
   const [isPresentingResults, setIsPresentingResult] = useState(false);
-  // const handleToggleOpenResult = () => {
-  //   setIsPresentingResult(prevState => !prevState);
-  // }
   const openResults =  () => setIsPresentingResult(true);
   const closeResults = () => setIsPresentingResult(false);
 
@@ -35,9 +32,9 @@ function App() {
         <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet"></link>
       </Helmet>
       <AppWrapper>
-        {isPresentingResults ? <Results /> : null}
+        {isPresentingResults ? <Results closeResults={closeResults}/> : null}
         <Header showHamburger={!isPresentingResults} isControlPanelOpen={isControlPanelOpen} onControlPanelToggle={handleToggleControlPanel} />
-        <ControlPanel isOpen={isControlPanelOpen} submitSelection={openResults} />
+        <ControlPanel isOpen={isControlPanelOpen} submit={openResults} />
         <Map />
       </AppWrapper>
     </Layout>

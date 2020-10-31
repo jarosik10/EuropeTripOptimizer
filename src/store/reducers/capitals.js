@@ -21,12 +21,18 @@ const removeCapital = (state, { countryId }) => {
     return { selectedCapitals: state.selectedCapitals.filter(({ countryId: id }) => countryId !== id) }
 }
 
+const resetCapitalsState = () => {
+    return initialState;
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_CAPITAL:
             return addCapital(state, action);
         case actionTypes.REMOVE_CAPITAL:
             return removeCapital(state, action);
+        case actionTypes.RESET_CAPITALS_STATE:
+            return resetCapitalsState();
         default:
             return state;
     }

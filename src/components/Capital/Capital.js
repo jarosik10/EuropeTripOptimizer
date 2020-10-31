@@ -72,7 +72,7 @@ const Capital = ({ name, countryShortcut, handleCancel }) => {
                 <H3>{capitalName}</H3>
                 <FlagImage><img src={`https://www.countryflags.io/${countryShortcut}/shiny/64.png`} alt={`${countryShortcut.toUpperCase()} flag`} /></FlagImage>
             </StyledCapital>
-            <CancelButton onClick={() => handleCancel(countryShortcut)} />
+            {handleCancel ? <CancelButton onClick={() => handleCancel(countryShortcut)} /> : null}
         </StyledCapitalWrapper>
     );
 }
@@ -80,7 +80,7 @@ const Capital = ({ name, countryShortcut, handleCancel }) => {
 Capital.propTypes = {
     name: PropTypes.string.isRequired,
     countryShortcut: PropTypes.string.isRequired,
-    handleCancel: PropTypes.func.isRequired,
+    handleCancel: PropTypes.func,
 }
 
 export default Capital;

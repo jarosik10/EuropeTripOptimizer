@@ -24,7 +24,6 @@ export const fetchDistanceMatrixFail = (error) => {
 }
 
 export const fetchDistanceMatrix = (locations, capitalsOrder) => {
-    console.log('fetchDistanceMatrix', locations, capitalsOrder);
     return dispatch => {
         dispatch(fetchDistanceMatrixStart());
         const API_KEY = '5b3ce3597851110001cf62487537592427e7443b9c7833eb30532a89'
@@ -37,11 +36,9 @@ export const fetchDistanceMatrix = (locations, capitalsOrder) => {
         };
         axios.post(url, data)
             .then(res => {
-                console.log(res.data);
                 dispatch(fetchDistanceMatrixSuccess(res.data.distances, capitalsOrder));
             })
             .catch(err => {
-                console.log(err);
                 dispatch(fetchDistanceMatrixFail(err));
             });
     }
@@ -62,13 +59,17 @@ export const antColonyOptimizationSuccess = (optimalRoute, optimalDistance) => {
 }
 
 export const executeAntColonyOptimization = (distances) => {
-    console.log('executeAntColonyOptimization');
     return dispatch => {
         dispatch(antColonyOptimizationStart());
         antColonyOptimizer(distances)
             .then(({ route, distance }) => {
-                console.log('executed', route, distance)
                 dispatch(antColonyOptimizationSuccess(route, distance));
             });
+    }
+}
+
+export const resetResultsState = () => {
+    return {
+        type: actionTypes.RESET_RESULTS_STATE,
     }
 }

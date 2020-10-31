@@ -14,7 +14,7 @@ const StyledStartingPointWrapper = styled.div`
 const StartingPoint = ({capital, handleCancel}) => {
     return (
         <StyledStartingPointWrapper>
-            <H2>Starting point</H2>
+            <H2 underScore>Starting point</H2>
             {capital ? <Capital name={capital.capitalName} countryShortcut={capital.countryId} handleCancel={handleCancel}/> : null}
         </StyledStartingPointWrapper>
     );

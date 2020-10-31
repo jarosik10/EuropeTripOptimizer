@@ -14,3 +14,9 @@ export const removeCapital = countryId => {
         countryId: countryId
     }
 }
+
+export const resetCapitalsState = () => {
+    return {
+        type: actionTypes.RESET_CAPITALS_STATE,
+    }
+}

@@ -11,7 +11,7 @@ const H2 = styled.h2`
     background-color: ${({ isDark, theme }) => isDark ? theme.colors.darkBlue : theme.colors.lightBlue};
 
     ::before {
-        display: ${({ isDark }) => isDark ? 'none' : 'block'};
+        display: ${({ underScore }) => underScore ? 'block' : 'none'};
         content: '';
         position: absolute;
         bottom: 0;
@@ -19,13 +19,14 @@ const H2 = styled.h2`
         height: 2px;
         border-radius: 5px;
         left: 50%;
-        background-color: ${({ theme }) => theme.colors.darkBlue};
+        background-color: ${({ theme, isDark }) => isDark ? theme.colors.white : theme.colors.darkBlue};
         transform: translateX(-50%);
     }
 `;
 
 H2.propTypes = {
-    isDark: PropTypes.bool
+    isDark: PropTypes.bool,
+    underScore: PropTypes.bool
 }
 
 export default H2;

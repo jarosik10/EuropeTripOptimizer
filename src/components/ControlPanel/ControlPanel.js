@@ -84,7 +84,7 @@ const StyledButtonWrapper = styled.div`
     }
 `;
 
-const ControlPanel = ({ isOpen, selectedCapitals, removeCapital, submitSelection, fetchDistanceMatrix }) => {
+const ControlPanel = ({ isOpen, selectedCapitals, removeCapital, submit, fetchDistanceMatrix }) => {
     const getCapitalsLocations = (capitals) => {
         const [startingPoint] = capitals.filter(({ isStartingPoint }) => isStartingPoint);
         if (startingPoint) {
@@ -99,7 +99,7 @@ const ControlPanel = ({ isOpen, selectedCapitals, removeCapital, submitSelection
     }
 
     const handleClick = () => {
-        submitSelection();
+        submit();
         const [locations, orderedCountresID] = getCapitalsLocations(selectedCapitals);
         fetchDistanceMatrix(locations, orderedCountresID);
     }
@@ -112,7 +112,7 @@ const ControlPanel = ({ isOpen, selectedCapitals, removeCapital, submitSelection
             <StartingPoint capital={startingPointCapital} handleCancel={removeCapital} />
             <DestinationPoints capitals={destinationPointsCapitals} handleCancel={removeCapital} />
             <StyledButtonWrapper>
-                <Button isEnabled={isEnoughCapitals} handleClick={handleClick}>Calculate route</Button>
+                <Button isEnabled={isEnoughCapitals} handleClick={handleClick} isCentered>Calculate route</Button>
             </StyledButtonWrapper>
         </StyledControlPanel>
     );
