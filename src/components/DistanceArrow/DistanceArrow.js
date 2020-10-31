@@ -21,7 +21,7 @@ const DistanceArrow = styled.div`
         border-top: 1em solid ${({ theme }) => theme.colors.lightBlue};
         border-left: 0.6em solid transparent;
         border-right: 0.6em solid transparent;
-        z-index: -1;
+        z-index: ${({ theme }) => theme.zindex.minus};
     }
 
     ::after {

@@ -18,7 +18,12 @@ const StyledCapital = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 60%;
+    max-width: 275px;
     padding: 4px 12px;
+
+    ${({ theme }) => theme.media.smallTablet} {
+        max-width: 300px;
+    }
 `;
 
 const FlagImage = styled.div`
@@ -44,6 +49,7 @@ const CancelButton = styled.button`
     border: none;
     background: none;
     position: relative;
+    cursor: pointer;
 
     ::before, ::after{
         content: '';

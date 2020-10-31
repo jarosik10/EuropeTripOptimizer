@@ -8,6 +8,7 @@ const StyledLoader = styled.div`
     align-items: center;
     justify-content: center;
     grid-row: 1 / -1;
+    background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const Message = styled.p`

@@ -12,10 +12,12 @@ const StyledButton = styled.button`
     box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
     display: block;
     margin: ${({ isCentered }) => isCentered ? '16px auto' : '16px 0'};
+    cursor: pointer;
 
     :disabled {
         background-color: #C0C0C0;
         box-shadow: inset 2px 4px 6px 2px rgba(0,0,0,0.5);
+        cursor: not-allowed;
     }
 `;
 

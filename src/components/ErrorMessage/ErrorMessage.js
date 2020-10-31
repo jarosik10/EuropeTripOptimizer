@@ -7,7 +7,7 @@ const StyledErrorMessage = styled.div`
     color: black;
     padding: 14px 16px;
     text-align: center;
-    margin: 16px 16px 0 16px;
+    margin: 16px auto 0 auto;
 `;
 
 const ErrorMessage = ({ text }) => {

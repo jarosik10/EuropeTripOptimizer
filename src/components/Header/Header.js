@@ -11,7 +11,7 @@ const StyledHeader = styled.header`
     align-items: center;
     padding: 0 16px;
     min-height: 60px;
-    z-index: 9999;
+    z-index: ${({ theme }) => theme.zindex.level7};
     position: fixed;
     width: 100%;
     top: 0;

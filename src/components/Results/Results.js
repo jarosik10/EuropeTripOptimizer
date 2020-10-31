@@ -10,21 +10,38 @@ import Button from '../Button/Button';
 import Capital from '../Capital/Capital';
 import DistanceArrow from '../DistanceArrow/DistanceArrow';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import Backdrop from '../Backdrop/Backdrop';
 
 const StyledResults = styled.div`
     position: absolute;
     width: 100%;
     height: calc(100vh - 60px);
     top: 60px;
-    z-index: 9999;
+    z-index: ${({ theme }) => theme.zindex.level9};
     background-color: ${({ theme }) => theme.colors.white};
     display: grid;
     grid-template-rows: auto 1fr;
+
+    ${({ theme }) => theme.media.tablet} {
+        text-align: center;
+    }
+
+    ${({ theme }) => theme.media.smallDesktop} {
+        width: 80%;
+        max-width: 1000px;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.25);
+    }
 `;
 
 const StyledSummaryWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     width: 100%;
     background-color: ${({ theme }) => theme.colors.lightBlue};
 `;
@@ -52,6 +69,14 @@ const StyledDistanceWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+`;
+
+const StyledBackdrop = styled(Backdrop)`
+    display: none;
+
+    ${({ theme }) => theme.media.smallDesktop} {
+            display: block
+    }
 `;
 
 const Results = ({ selectedCapitals, loadingDistanceMatrix, executedACO, distances, capitalsOrder, executeAntColonyOptimization, optimalRoute, optimalDistance, closeResults, resetCapitalsState, resetResultsState }) => {
@@ -146,7 +171,7 @@ const Results = ({ selectedCapitals, loadingDistanceMatrix, executedACO, distanc
                 const [{ capitalName }] = selectedCapitals.filter(({ countryId }) => countryId.toUpperCase() === unreachableCountryID);
                 return capitalName.charAt(0).toUpperCase() + capitalName.slice(1);
             })
-            errorMessage = `Couldn't find route to ${unreachableRouteCapitalsName.join(', ')}.`;
+            errorMessage = `A route to ${unreachableRouteCapitalsName.join(', ')} could not be found.`;
         }
 
         results = (
@@ -183,9 +208,12 @@ const Results = ({ selectedCapitals, loadingDistanceMatrix, executedACO, distanc
 
     const loaderMessage = loadingDistanceMatrix ? 'Calculating the distance matrix' : !executedACO ? 'Executing ant colony optimization' : '';
     return (
-        <StyledResults>
-            {(loadingDistanceMatrix || !executedACO) ? <Loader text={loaderMessage} /> : results}
-        </StyledResults>
+        <>
+            <StyledBackdrop />
+            <StyledResults>
+                {(loadingDistanceMatrix || !executedACO) ? <Loader text={loaderMessage} /> : results}
+            </StyledResults>
+        </>
     );
 }
 

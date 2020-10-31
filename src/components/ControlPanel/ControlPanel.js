@@ -19,7 +19,7 @@ const StyledControlPanel = styled.div`
     transform: translateX(${({ isOpen }) => isOpen ? '0' : '100%'});
     visibility: ${({ isOpen }) => isOpen ? 'visible' : 'hidden'};
     transition: transform .3s ease-in-out, visibility .3s ease-in-out;
-    z-index: 9998;
+    z-index: ${({ theme }) => theme.zindex.level6};
     display: grid;
     grid-template-rows: auto 1fr auto;
     border-left: 1px solid ${({ theme }) => theme.colors.darkBlue};
