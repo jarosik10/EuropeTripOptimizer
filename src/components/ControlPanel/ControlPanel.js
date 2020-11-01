@@ -14,6 +14,7 @@ const StyledControlPanel = styled.div`
     top: 0;
     right: 0;
     bottom: 0;
+    height: 100vh;
     padding-top: 60px;
     width: 80%;
     transform: translateX(${({ isOpen }) => isOpen ? '0' : '100%'});
@@ -21,7 +22,7 @@ const StyledControlPanel = styled.div`
     transition: transform .3s ease-in-out, visibility .3s ease-in-out;
     z-index: ${({ theme }) => theme.zindex.level6};
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto minmax(100px, 1fr) auto;
     border-left: 1px solid ${({ theme }) => theme.colors.darkBlue};
     box-shadow: -1px 0px 4px 1px rgba(0, 0, 0, 0.25);    
 
@@ -60,6 +61,7 @@ const StyledButtonWrapper = styled.div`
     bottom: 0;
     margin-top: auto;
     background-color: ${({ theme }) => theme.colors.white};
+    flex-shrink: 0;
     
     ::before {
         content: '';
