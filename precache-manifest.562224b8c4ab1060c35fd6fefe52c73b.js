@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/EuropeTripOptimizer/4c77f98b4bb6aa0c3990.worker.js.LICENSE.txt"
   },
   {
-    "revision": "28b6e8752a2a39ae836be3a8ff72f3dd",
+    "revision": "92e9824e3e8b34509b1659980355bf16",
     "url": "/EuropeTripOptimizer/index.html"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/EuropeTripOptimizer/static/js/2.d3e11867.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ff559fed32f67359e08c",
-    "url": "/EuropeTripOptimizer/static/js/main.81050e65.chunk.js"
+    "revision": "22f2b74754d153216a5c",
+    "url": "/EuropeTripOptimizer/static/js/main.5c2fa6e8.chunk.js"
   },
   {
     "revision": "95eb219605535b6b0e36",

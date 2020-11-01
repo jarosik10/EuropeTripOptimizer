@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/EuropeTripOptimizer/precache-manifest.ace20d270fa30c3865032a08660287e6.js"
+  "/EuropeTripOptimizer/precache-manifest.562224b8c4ab1060c35fd6fefe52c73b.js"
 );
 
 self.addEventListener('message', (event) => {
