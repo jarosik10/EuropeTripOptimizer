@@ -144,6 +144,7 @@ const Results = ({ selectedCapitals, loadingDistanceMatrix, executedACO, distanc
             distanceMatrix.current = newDistanceMatrix;
             executeAntColonyOptimization(newDistanceMatrix._data);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loadingDistanceMatrix])
 
     if (executedACO) {

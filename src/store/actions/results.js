@@ -27,7 +27,7 @@ export const fetchDistanceMatrixFail = (error) => {
 export const fetchDistanceMatrix = (locations, capitalsOrder) => {
     return dispatch => {
         dispatch(fetchDistanceMatrixStart());
-        const API_KEY = '5b3ce3597851110001cf62487537592427e7443b9c7833eb30532a89'
+        const API_KEY = '5b3ce3597851110001cf624801252dd183ec42aa82ac6fae2169dea2'
         const url = `https://api.openrouteservice.org/v2/matrix/driving-car?api_key=${API_KEY}`;
         const data = {
             "locations": locations,

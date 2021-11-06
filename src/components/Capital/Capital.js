@@ -76,7 +76,7 @@ const Capital = ({ name, countryShortcut, handleCancel }) => {
         <StyledCapitalWrapper>
             <StyledCapital>
                 <H3>{capitalName}</H3>
-                <FlagImage><img src={`https://www.countryflags.io/${countryShortcut}/shiny/64.png`} alt={`${countryShortcut.toUpperCase()} flag`} /></FlagImage>
+                <FlagImage><img src={`https://flagcdn.com/64x48/${countryShortcut}.png`} alt={`${countryShortcut.toUpperCase()} flag`} /></FlagImage>
             </StyledCapital>
             {handleCancel ? <CancelButton onClick={() => handleCancel(countryShortcut)} /> : null}
         </StyledCapitalWrapper>
