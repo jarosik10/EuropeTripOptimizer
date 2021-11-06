@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/EuropeTripOptimizer/static/js/main.5c2fa6e8.chunk.js",
-    "main.js.map": "/EuropeTripOptimizer/static/js/main.5c2fa6e8.chunk.js.map",
+    "main.js": "/EuropeTripOptimizer/static/js/main.2bc09bf3.chunk.js",
+    "main.js.map": "/EuropeTripOptimizer/static/js/main.2bc09bf3.chunk.js.map",
     "runtime-main.js": "/EuropeTripOptimizer/static/js/runtime-main.2845df1a.js",
     "runtime-main.js.map": "/EuropeTripOptimizer/static/js/runtime-main.2845df1a.js.map",
     "static/js/2.d3e11867.chunk.js": "/EuropeTripOptimizer/static/js/2.d3e11867.chunk.js",
@@ -10,14 +10,14 @@
     "4c77f98b4bb6aa0c3990.worker.js.LICENSE.txt": "/EuropeTripOptimizer/4c77f98b4bb6aa0c3990.worker.js.LICENSE.txt",
     "4c77f98b4bb6aa0c3990.worker.js.map": "/EuropeTripOptimizer/4c77f98b4bb6aa0c3990.worker.js.map",
     "index.html": "/EuropeTripOptimizer/index.html",
-    "precache-manifest.562224b8c4ab1060c35fd6fefe52c73b.js": "/EuropeTripOptimizer/precache-manifest.562224b8c4ab1060c35fd6fefe52c73b.js",
+    "precache-manifest.710dc43f202fd9390af69002ce13c6b1.js": "/EuropeTripOptimizer/precache-manifest.710dc43f202fd9390af69002ce13c6b1.js",
     "service-worker.js": "/EuropeTripOptimizer/service-worker.js",
     "static/js/2.d3e11867.chunk.js.LICENSE.txt": "/EuropeTripOptimizer/static/js/2.d3e11867.chunk.js.LICENSE.txt",
-    "static/media/map.7c60f0df.svg": "/EuropeTripOptimizer/static/media/map.7c60f0df.svg"
+    "static/media/map.b2c7d769.svg": "/EuropeTripOptimizer/static/media/map.b2c7d769.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.2845df1a.js",
     "static/js/2.d3e11867.chunk.js",
-    "static/js/main.5c2fa6e8.chunk.js"
+    "static/js/main.2bc09bf3.chunk.js"
   ]
 }

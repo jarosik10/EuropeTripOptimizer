@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/EuropeTripOptimizer/4c77f98b4bb6aa0c3990.worker.js.LICENSE.txt"
   },
   {
-    "revision": "92e9824e3e8b34509b1659980355bf16",
+    "revision": "e78d424313c791cbc5c8b2d1f1a18b2a",
     "url": "/EuropeTripOptimizer/index.html"
   },
   {
@@ -20,15 +20,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/EuropeTripOptimizer/static/js/2.d3e11867.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "22f2b74754d153216a5c",
-    "url": "/EuropeTripOptimizer/static/js/main.5c2fa6e8.chunk.js"
+    "revision": "d75db82541cb489dce49",
+    "url": "/EuropeTripOptimizer/static/js/main.2bc09bf3.chunk.js"
   },
   {
     "revision": "95eb219605535b6b0e36",
     "url": "/EuropeTripOptimizer/static/js/runtime-main.2845df1a.js"
   },
   {
-    "revision": "7c60f0dfb28681f676f0f48b115b5ec6",
-    "url": "/EuropeTripOptimizer/static/media/map.7c60f0df.svg"
+    "revision": "b2c7d769e50bdaec1d1a188a6b3c5d6f",
+    "url": "/EuropeTripOptimizer/static/media/map.b2c7d769.svg"
   }
 ]);
